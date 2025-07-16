@@ -22,7 +22,7 @@ repository               : "armelleduston/armelleduston.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "images/headshot.jpeg"
+  avatar           : "headshot.jpeg"
   name             : "Armelle Duston"
   pronouns         : "she/her"
   bio              : "Biostatistics PhD Student"
