@@ -3,10 +3,89 @@ layout: archive
 title: "Teaching"
 permalink: /teaching/
 author_profile: true
+hide_title: true
 ---
 
 {% include base_path %}
 
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+<div class="teaching-header">
+  <h2>Teaching</h2>
+</div>
+
+<style>
+  .teaching-header {
+    display: flex;
+    align-items: center;
+    margin: 0 0 1.5rem;
+  }
+
+  .teaching-header h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 2.2vw, 2.3rem);
+  }
+
+  .teaching-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .teaching-card {
+    padding: 1.3rem 1.4rem;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  }
+
+  .teaching-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.45rem;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .teaching-tag {
+    display: inline-block;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(59, 130, 246, 0.08);
+    color: #1d4ed8;
+  }
+
+  .teaching-card h3 {
+    margin: 0.2rem 0 0;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    line-height: 1.35;
+  }
+
+  @media (max-width: 640px) {
+    .teaching-card {
+      padding: 1rem 1rem 1.1rem;
+    }
+
+    .teaching-meta {
+      font-size: 0.68rem;
+    }
+  }
+</style>
+
+{% assign teaching_items = site.teaching | sort: 'date' | reverse %}
+
+<div class="teaching-list">
+  {% for post in teaching_items %}
+    <article class="teaching-card" itemscope itemtype="http://schema.org/CreativeWork">
+      <div class="teaching-meta">
+        <span class="teaching-tag">{{ post.type }}</span>
+        <span>{{ post.venue }}</span>
+        <span>{{ post.date | date: "%Y" }}</span>
+      </div>
+      <h3 itemprop="name">{{ post.title }}</h3>
+    </article>
+  {% endfor %}
+</div>

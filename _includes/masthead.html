@@ -1,6 +1,6 @@
 {% include base_path %}
 
-<div class="site-banner">
+<div class="site-banner{% if page.url == "/" %} site-banner--home{% endif %}">
   <img src="{{ base_path }}/images/mtn_banner.jpg" alt="Site banner" />
   {% if page.url == "/" %}
     <h1 class="site-banner__title">Home</h1>

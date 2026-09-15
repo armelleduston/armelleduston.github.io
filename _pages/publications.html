@@ -3,34 +3,149 @@ layout: archive
 title: "Publications"
 permalink: /publications/
 author_profile: true
+hide_title: true
 ---
-
-{% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
-{% endif %}
 
 {% include base_path %}
 
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single.html %}
-    {% endfor %}
+<div class="publication-header">
+  <h2>Selected publications</h2>
+
+  {% if site.author.googlescholar %}
+    <a class="btn btn--primary" href="{{ site.author.googlescholar }}" target="_blank" rel="noopener noreferrer">
+      Google Scholar profile
+    </a>
+  {% endif %}
+</div>
+
+<style>
+  .publication-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .publication-header h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 2.2vw, 2.3rem);
+  }
+
+  .publication-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .publication-card {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 18px;
+    padding: 1.3rem 1.4rem;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .publication-card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .publication-card-link:hover .publication-card,
+  .publication-card-link:focus .publication-card {
+    transform: translateY(-2px);
+    border-color: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .publication-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.45rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #475569;
+    font-weight: 700;
+  }
+
+  .publication-tag {
+    display: inline-block;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(59, 130, 246, 0.08);
+    color: #1d4ed8;
+  }
+
+  .publication-card h3 {
+    margin: 0.2rem 0 0.5rem;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    line-height: 1.35;
+  }
+
+  .publication-card h3 a {
+    text-decoration: none;
+  }
+
+  .publication-card p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .publication-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.9rem;
+  }
+
+  .publication-links a {
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .publication-card {
+      padding: 1rem 1rem 1.1rem;
+    }
+
+    .publication-meta {
+      font-size: 0.68rem;
+    }
+  }
+</style>
+
+{% assign publication_items = site.publications | sort: 'date' | reverse %}
+
+<div class="publication-list">
+  {% for post in publication_items %}
+    {% assign link_target = post.paperurl %}
+    {% if link_target == nil or link_target == '' %}
+      {% assign link_target = post.excerpt | replace: '[Link](', '' | replace: ')', '' %}
+    {% endif %}
+    {% if link_target == nil or link_target == '' %}
+      {% assign link_target = base_path | append: post.url %}
+    {% endif %}
+    <a class="publication-card-link" href="{{ link_target }}" target="_blank" rel="noopener noreferrer">
+      <article class="publication-card" itemscope itemtype="http://schema.org/ScholarlyArticle">
+        <div class="publication-meta">
+          {% if post.category %}
+            <span class="publication-tag">{{ post.category | replace: '-', ' ' | capitalize }}</span>
+          {% endif %}
+          <span>{{ post.date | date: "%Y" }}</span>
+          <span>{{ post.venue }}</span>
+        </div>
+
+        <h3 itemprop="name">{{ post.title }}</h3>
+
+        {% if post.excerpt %}
+          <p>{{ post.excerpt | markdownify | strip_html | truncate: 220 }}</p>
+        {% endif %}
+      </article>
+    </a>
   {% endfor %}
-{% else %}
-  {% for post in site.publications reversed %}
-    {% include archive-single.html %}
-  {% endfor %}
-{% endif %}
-
-
-
+</div>
