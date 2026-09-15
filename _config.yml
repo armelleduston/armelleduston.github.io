@@ -22,7 +22,7 @@ repository               : "armelleduston/armelleduston.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "headshot.jpeg"
+  avatar           : "sitting_on_ledge.jpeg"
   name             : "Armelle Duston"
   pronouns         : "she/her"
   bio              : "Biostatistics PhD Student"
@@ -217,6 +217,8 @@ kramdown:
 
 # These settings control the types of collections used by the template
 collections:
+  posts:
+    output: false
   teaching:
     output: true
     permalink: /:collection/:path/

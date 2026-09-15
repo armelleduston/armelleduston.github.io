@@ -95,7 +95,10 @@
   }
 
   img {
-    max-width: 175px;
+    max-width: 240px;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
     border-radius: 50%;
 
     @include breakpoint($large) {
